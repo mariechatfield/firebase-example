@@ -35,10 +35,22 @@ define(["firebase"], function (Firebase) {
     });
   };
 
+  var authTwitter = function () {
+    recommendations.authWithOAuthPopup("twitter", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+        authentication = authData;
+      }
+    });
+  };
+
   return {
     saveRecommendation: saveRecommendation,
     getMostRecentRecommendation: getMostRecentRecommendation,
     authAnonymously: authAnonymously,
+    authTwitter: authTwitter,
     getAuthData: getAuthData
   };
 
