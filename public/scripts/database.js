@@ -5,6 +5,12 @@ define(["firebase"], function (Firebase) {
   // Reference to the recommendations object in your Firebase
   var recommendations = new Firebase("https://" + myFirebaseApp + ".firebaseio.com/recommendations");
 
+  var authentication = {};
+
+  var getAuthData = function () {
+    return authentication;
+  };
+
   var saveRecommendation = function (recommendation) {
     recommendations.push(recommendation);
   };
@@ -18,9 +24,22 @@ define(["firebase"], function (Firebase) {
     });
   };
 
+  var authAnonymously = function () {
+    recommendations.authAnonymously(function(error, authData) {
+      if (error) {
+        console.log("Authentication Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+        authentication = authData;
+      }
+    });
+  };
+
   return {
     saveRecommendation: saveRecommendation,
-    getMostRecentRecommendation: getMostRecentRecommendation
+    getMostRecentRecommendation: getMostRecentRecommendation,
+    authAnonymously: authAnonymously,
+    getAuthData: getAuthData
   };
 
 });

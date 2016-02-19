@@ -18,13 +18,19 @@ require(["jquery", "database"], function ($, Database) {
     var presenter = $("#talkPresenter").val();
     var link = $("#talkLink").val();
 
+    // Get unique user id from authenticated user
+    var uid = Database.getAuthData().uid;
+
     // Push a new recommendation to the database using those values
     Database.saveRecommendation({
       "title": title,
       "presenter": presenter,
-      "link": link
+      "link": link,
+      "uid": uid
     });
   };
+
+  Database.authAnonymously();
 
   // Get the single most recent recommendation from the database and
   // update the table with its values. This is called every time the child_added
