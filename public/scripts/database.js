@@ -14,7 +14,7 @@ define(["firebase"], function (Firebase) {
   };
 
   var getMostRecentRecommendation = function (callback) {
-    recommendations.limitToLast(1).on('child_added', function(childSnapshot) {
+    recommendations.limitToLast(3).on('child_added', function(childSnapshot) {
       // Get the recommendation data from the most recent snapshot of data
       // added to the recommendations list in Firebase
       recommendation = childSnapshot.val();

@@ -72,20 +72,28 @@ require(["jquery", "database"], function ($, Database) {
 
   initialize();
 
+  var addRecommendationRow = function (recommendation) {
+    var html = "<tr>\
+      <td>" + recommendation.title + "</td>\
+      <td>" + recommendation.presenter + "</td>\
+      <td><a id='link' target='_blank' href='" + recommendation.link + "'>" + recommendation.link + "</a></td>\
+      <td>" + getSubmitterName(recommendation.twitter) + "</td>\
+    </tr>";
+
+    $("#recommendations").append(html);
+
+    while ($("#recommendations tr").length > 3) {
+      $("#recommendations tr").first().remove();
+    }
+  };
+
   // Get the single most recent recommendation from the database and
   // update the table with its values. This is called every time the child_added
   // event is triggered on the recommendations Firebase reference, which means
   // that this will update EVEN IF you don't refresh the page. Magic.
   Database.getMostRecentRecommendation(function (recommendation) {
     // Update the HTML to display the recommendation text
-    $("#title").html(recommendation.title)
-    $("#presenter").html(recommendation.presenter)
-    $("#link").html(recommendation.link)
-
-    // Make the link actually work and direct to the URL provided
-    $("#link").attr("href", recommendation.link)
-
-    $("#submitterName").html(getSubmitterName(recommendation.twitter))
+    addRecommendationRow(recommendation);
   });
 
   // Find the HTML element with the id recommendationForm, and when the submit
