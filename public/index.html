@@ -1,8 +1,9 @@
 <html>
   <head>
-    <!-- Configure viewport to correctly size for iOS mobile devices. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Ensure proper rendering and touch zooming for mobile devices. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Set the title that will be displayed at the top of the browser. -->
     <title>Talks You Should Watch</title>
 
     <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive (aka will work on all devices of all sizes). -->
@@ -10,14 +11,21 @@
   </head>
 
   <body>
-    <!-- Load the application script, which will save data to our Firebase app when we click the button. -->
+    <!-- Load the require.js library, which helps load required dependencies before running
+         the Javascript that depends on it. Once require.js is ready, it will load the script
+         specified in data-main, which in this case is our application script. -->
     <script data-main="scripts/application" src="lib/require.js"></script>
 
+    <!-- Wrap all visible HTML elements inside this container, which Bootstrap will use
+         to resize and order elements with CSS according to screen size. (This behavior
+         is commonly called "responsive" because it responds to changes in screen.) -->
     <div class="container">
       <h1>Talks You Should Watch</h1>
 
       <h3>Last Talk Proposed</h3>
 
+      <!-- Table of recent recommendations. Starts out with just the header columns defined.
+           All the rows (and their contents) will be added dynamically with Javascript. -->
       <div class="table-responsive">
         <table class="table table-striped">
           <thead>
@@ -28,12 +36,15 @@
               <th>Submitter Name</th>
             </tr>
           </thead>
+          <!-- The body of the table, to which we will add rows with Javascript. -->
           <tbody id ="recommendations"></tbody>
         </table>
       </div>
 
       <h3>Submit a Talk</h3>
 
+      <!-- Form to submit a new talk recommendation. form-group and form-control are classes
+           used by Bootstrap to properly style the inputs. -->
       <form id="recommendationForm">
         <div class="form-group">
           <label for="talkTitle">Title</label>
@@ -47,21 +58,32 @@
 
         <div class="form-group">
           <label for="talkLink">Link</label>
+          <!-- Note that this input uses type "url". If a user attempts to enter something that
+               does not match a proper URL, they will see an error message. (Thanks Bootstrap and HTML5!) -->
           <input type="url" class="form-control" id="talkLink" placeholder="Link to a recording of the talk">
         </div>
 
         <div class="form-group">
           <label for="talkUser">Submitter Name</label>
+          <!-- Instead of a proper input, we want to display text to the user here. So we use
+               form-control-static, and Bootstrap arranges this similarly to the way it arranges
+               labels and inputs, so that it matches the style of the rest of our form. -->
           <p class="form-control-static" id="talkUser">
             <i>anonymous</i>
+            <!-- Technically a button, but using class btn-link makes Bootstrap style this like a link.
+                 We'll use Javascript and the jQuery library to make sure that when a user clicks
+                 this button link, we actually prompt them to log in with Twitter. -->
             <button id="authTwitter" type="button" class="btn btn-link">Sign in with Twitter</button>
           </p>
         </div>
       </form>
 
-      <!-- When you click this button, trigger the submit event on this form. -->
+      <!-- We'll use Javascript and the jQuery library to make sure that when a user clicks
+           this button, we submit the form. -->
       <button id="submitButton" class="btn btn-default">Submit</button>
 
+      <!-- This is empty for now, but if we want to display an error message later, we can
+           fill the HTML contents using Javascript so that it will show up to users. -->
       <p><strong id="errorMessage"></strong></p>
     </div>
   </body>
