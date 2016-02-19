@@ -19,6 +19,7 @@
             <th>Title</th>
             <th>Presenter</th>
             <th>Link</th>
+            <th>Submitter Name</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
             <td id="title"></td>
             <td id="presenter"></td>
             <td><a id="link" target="_blank"></a></td>
+            <td id="submitterName"></td>
           </tr>
         </tbody>
       </table>
@@ -47,6 +49,14 @@
         <div class="form-group">
           <label for="talkLink">Link</label>
           <input type="url" class="form-control" id="talkLink" placeholder="Link to a recording of the talk">
+        </div>
+
+        <div class="form-group">
+          <label for="talkUser">Submitter Name</label>
+          <p class="form-control-static" id="talkUser">
+            <i>anonymous</i>
+            <button id="authTwitter" type="button" class="btn btn-link">Sign in with Twitter</button>
+          </p>
         </div>
       </form>
 

@@ -46,7 +46,31 @@ require(["jquery", "database"], function ($, Database) {
     });
   };
 
-  Database.authTwitter();
+  var getSubmitterName = function (twitter) {
+    if (twitter) {
+      return twitter.displayName + " (@" + twitter.username + ")";
+    } else {
+      return "anonymous";
+    }
+  }
+
+  var updateTwitterName = function (authData) {
+    $("#talkUser").html(getSubmitterName(authData.twitter));
+  }
+
+  var initialize = function () {
+    var authData = Database.getAuthData();
+
+    if (authData) {
+     if (authData.twitter) {
+        updateTwitterName(authData);
+      }
+    } else {
+      Database.authAnonymously();
+    }
+  };
+
+  initialize();
 
   // Get the single most recent recommendation from the database and
   // update the table with its values. This is called every time the child_added
@@ -60,13 +84,21 @@ require(["jquery", "database"], function ($, Database) {
 
     // Make the link actually work and direct to the URL provided
     $("#link").attr("href", recommendation.link)
+
+    $("#submitterName").html(getSubmitterName(recommendation.twitter))
   });
 
   // Find the HTML element with the id recommendationForm, and when the submit
   // event is triggered on that element, call submitRecommendation.
   $("#submitButton").click(submitRecommendation);
 
-  $("#submitButton").mouseup(function(){
+  $("#authTwitter").click(function () {
+    Database.authTwitter(function (authData) {
+      updateTwitterName(authData);
+    });
+  });
+
+  $(".btn").mouseup(function(){
       $(this).blur();
   });
 });

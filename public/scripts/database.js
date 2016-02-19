@@ -5,10 +5,8 @@ define(["firebase"], function (Firebase) {
   // Reference to the recommendations object in your Firebase
   var recommendations = new Firebase("https://" + myFirebaseApp + ".firebaseio.com/recommendations");
 
-  var authentication = {};
-
   var getAuthData = function () {
-    return authentication;
+    return recommendations.getAuth();
   };
 
   var saveRecommendation = function (recommendation, callback) {
@@ -30,18 +28,18 @@ define(["firebase"], function (Firebase) {
         console.log("Authentication Failed!", error);
       } else {
         console.log("Authenticated successfully with payload:", authData);
-        authentication = authData;
       }
     });
   };
 
-  var authTwitter = function () {
+  var authTwitter = function (callback) {
     recommendations.authWithOAuthPopup("twitter", function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
+        authAnonymously();
       } else {
         console.log("Authenticated successfully with payload:", authData);
-        authentication = authData;
+        callback(authData);
       }
     });
   };
