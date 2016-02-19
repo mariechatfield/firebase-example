@@ -11,8 +11,8 @@ define(["firebase"], function (Firebase) {
     return authentication;
   };
 
-  var saveRecommendation = function (recommendation) {
-    recommendations.push(recommendation);
+  var saveRecommendation = function (recommendation, callback) {
+    recommendations.push(recommendation, callback);
   };
 
   var getMostRecentRecommendation = function (callback) {

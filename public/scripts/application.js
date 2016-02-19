@@ -36,6 +36,13 @@ require(["jquery", "database"], function ($, Database) {
       "link": link,
       "uid": uid,
       "twitter": twitter
+    }, function (error) {
+      if (error) {
+        $("#errorMessage").html("Whoops! There was a problem saving this recommendation.");
+      } else {
+        $("#errorMessage").empty();
+        $("#recommendationForm input").val('');
+      }
     });
   };
 
@@ -57,5 +64,9 @@ require(["jquery", "database"], function ($, Database) {
 
   // Find the HTML element with the id recommendationForm, and when the submit
   // event is triggered on that element, call submitRecommendation.
-  $("#recommendationForm").submit(submitRecommendation);
+  $("#submitButton").click(submitRecommendation);
+
+  $("#submitButton").mouseup(function(){
+      $(this).blur();
+  });
 });
