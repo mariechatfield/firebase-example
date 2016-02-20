@@ -5,8 +5,12 @@
 // this module to load must also wait for Firebase to load.
 define(["firebase"], function (Firebase) {
 
+  // Unique Firebase app name -- REPLACE THIS WITH YOUR APP NAME IF YOU WANT
+  // TO FORK THIS REPO!
+  var myFirebaseApp = "talksyoushouldwatch";
+
   // Reference to our entire Firebase database
-  var firebaseApp = new Firebase("https://talksyoushouldwatch.firebaseio.com");
+  var firebaseApp = new Firebase("https://" + myFirebaseApp + ".firebaseio.com");
 
   // Reference to the recommendations object in our Firebase database
   var recommendations = firebaseApp.child("recommendations");
